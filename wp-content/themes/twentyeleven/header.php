@@ -78,7 +78,7 @@
 			<?php
 				// Check to see if the header image has been removed
 				$header_image = get_header_image();
-				if ( $header_image ) :
+				if ( $header_image &&0) :
 					// Compatibility with versions of WordPress prior to 3.4.
 					if ( function_exists( 'get_custom_header' ) ) {
 						// We need to figure out what the minimum width should be for our featured image.
