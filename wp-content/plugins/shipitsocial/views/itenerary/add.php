@@ -4,13 +4,14 @@
 	font-size:18px;
 }
 .label{
+	padding-top:20px;
 	padding-bottom:10px;
 	font-weight: bold;
 }
 .values{
 	padding-bottom:10px;
 }
-.label, .value{
+.value{
 	padding: 5px;
 }
 .label2{
@@ -22,7 +23,7 @@
 	text-align:center;
 }
 
-select{
+select, input{
 	font-size:18px;
 }
 
@@ -107,7 +108,12 @@ select{
 	</tr>
 	<tr>
 		<td class='values center'>
-			<input type='text' name='ddate' />
+			<input type='text' name='ddate' class='date center' />
+		</td>
+	</tr>
+	<tr>
+		<td class='values center'>
+			<input type='submit' value='Save' />
 		</td>
 	</tr>
 	
