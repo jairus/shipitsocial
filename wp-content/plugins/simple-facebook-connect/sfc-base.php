@@ -404,8 +404,9 @@ function sfc_remote($obj, $connection='', $args=array(), $type = 'GET') {
 	// get the access token
 	if (empty($args['access_token']) && !empty($args['code'])) {
 		
-		//dont verify ssl
-		$resp = wp_remote_get("https://graph.facebook.com/oauth/access_token?client_id={$options['appid']}&redirect_uri=&client_secret={$options['app_secret']}&code={$args['code']}", array( 'sslverify' => false ));	
+		//dont verify ssl jairus
+		$resp = wp_remote_get("https://graph.facebook.com/oauth/access_token?client_id={$options['appid']}&redirect_uri=&client_secret={$options['app_secret']}&code={$args['code']}", 
+		array( 'sslverify' => false ));	
 		if (!is_wp_error($resp) && 200 == wp_remote_retrieve_response_code( $resp )) {
 			$args['access_token'] = str_replace('access_token=','',$resp['body']);
 			$saved_access_tokens[$obj] = $args['access_token'];
