@@ -47,7 +47,7 @@ select, input{
 						Country
 					</td>
 					<td class='value'>
-						<select name='ocountry'>
+						<select name='ocountry' id='ocountry'>
 							<option value='Philippines'>Philippines</option>
 						</select>
 					</td>
@@ -57,7 +57,7 @@ select, input{
 						City
 					</td>
 					<td class='value'>
-						<select name='ocity'>
+						<select name='ocity' id='ocity'>
 							<option value='Manila'>Manila</option>
 							<option value='Makati'>Makati</option>
 							
@@ -80,7 +80,7 @@ select, input{
 						Country
 					</td>
 					<td class='value'>
-						<select name='dcountry'>
+						<select name='dcountry' id='dcountry'>
 							<option value='Philippines'>Philippines</option>
 						</select>
 					</td>
@@ -90,7 +90,7 @@ select, input{
 						City
 					</td>
 					<td class='value'>
-						<select name='dcity'>
+						<select name='dcity' id='dcity'>
 							<option value='Manila'>Manila</option>
 							<option value='Makati'>Makati</option>
 							

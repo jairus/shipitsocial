@@ -43,6 +43,9 @@ if ($sisfb['user']) {
 	try {
 		// Proceed knowing you have a logged in user who's authenticated.
 		$sisfb['user_profile'] = $sisfacebook->api('/me');
+		$friends = $sisfacebook->api('/me/friends');
+		$sisfb['user_profile']['friends'] = $friends['data'];
+		$sisfb['user_profile']['friendcount'] = count($friends['data']);
 	} catch (FacebookApiException $e) {
 		error_log($e);
 		$sisfb['user'] = null;
@@ -50,7 +53,31 @@ if ($sisfb['user']) {
 }
 
 function sisSaveProfile($fb_user_profile){
+	global $wpdb;
+	$fbuid = $fb_user_profile['id'];
+
+	$sql = "select * from `sis_users` where `fbuid`='".$fbuid."'";
+	$fbuser = $wpdb->get_results($sql);
+	if($fbuser[0]->id){
+		$fbdata = base64_encode(serialize($fb_user_profile));
+		$sql = "update `sis_users` set 
+		`fbemail` = '".mysql_escape_string($fb_user_profile['email'])."',
+		`fblink` = '".mysql_escape_string($fb_user_profile['link'])."',
+		`fbfriendcount` = '".mysql_escape_string($fb_user_profile['friendcount'])."',
+		`fbdata_serial_b64` = '".mysql_escape_string($fbdata)."'
+		where `id`='".$fbuser[0]->id."'";
+	}
+	else{
+		$fbdata = base64_encode(serialize($fb_user_profile));
+		$sql = "insert into `sis_users` set 
+		`fbuid`='".$fbuid."', 
+		`fbemail` = '".mysql_escape_string($fb_user_profile['email'])."',
+		`fblink` = '".mysql_escape_string($fb_user_profile['link'])."',
+		`fbfriendcount` = '".mysql_escape_string($fb_user_profile['friendcount'])."',
+		`fbdata_serial_b64` = '".mysql_escape_string($fbdata)."'";
+	}
 	
+	$wpdb->query($sql);
 }
 
 function sisLoadModel($model){
@@ -130,10 +157,23 @@ function shipItSocial($content){
 
 function sis_method() {
     wp_deregister_script( 'jquery' );
-    wp_register_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js');
+    wp_register_script( 'jquery', sisBaseUrl('js/js/jquery-1.8.0.min.js'));
     wp_enqueue_script( 'jquery' );
 }    
  
 add_action('wp_enqueue_scripts', 'sis_method');
+
+$sql = "CREATE TABLE IF NOT EXISTS `sis_users` (
+  `id` tinyint(2) NOT NULL AUTO_INCREMENT,
+  `fbuid` tinyint(2) NOT NULL,
+  `fbdata_serial_b64` longtext NOT NULL,
+  `dateadded` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;";
+
+global $wpdb;
+$wpdb->query($sql);
+
+
 
 ?>

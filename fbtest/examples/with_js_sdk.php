@@ -10,12 +10,8 @@ $facebook = new Facebook(array(
 // See if there is a user from a cookie
 $user = $facebook->getUser();
 
-$friends = $facebook->api('me/friends');
-
-echo "Friends Count ".count($friends['data']);
-
-
-
+//$friends = $facebook->api('me/friends');
+//echo "Friends Count ".count($friends['data']);
 
 
 if ($user) {
@@ -30,7 +26,7 @@ if ($user) {
 
 ?>
 <!DOCTYPE html>
-<html xmlns:fb="http://www.facebook.com/2008/fbml">
+<html>
   <body>
     <?php if ($user) { ?>
       Your user profile is

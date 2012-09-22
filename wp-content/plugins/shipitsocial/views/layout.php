@@ -33,8 +33,14 @@ jQuery(function(){
 	padding:5px;
 	background: #f0f0f0;
 }
+#friendcount, #email{
+	font-size:10px;
+}
 .avatar{
 	width:50px;
+}
+.hello{
+	padding-top:0px;
 }
 </style>
 <table id='sistable'>
@@ -43,10 +49,13 @@ jQuery(function(){
 		?>
 		<tr id='sistop'>
 			<td class='td avatar'>
-				<img src='http://graph.facebook.com/<?php echo $fb_user_profile['username'] ?>/picture' />
+				<a href='<?php echo $fb_user_profile['link']; ?>' target="_blank"><img src='http://graph.facebook.com/<?php echo $fb_user_profile['username'] ?>/picture' /></a>
+				
 			</td>
-			<td class='td'>
+			<td class='td hello'>
 				Hello <?php echo $fb_user_profile['first_name']; ?>!
+				<?php echo "<div id='email'>E-mail: ".$fb_user_profile['email']; ?></div>
+				<?php echo "<div id='friendcount'>Friend Count: ".$fb_user_profile['friendcount']; ?></div>
 			</td>
 			<td style='text-align:right' class='td'>	
 				<a href="<?php echo sisUrl(); ?>">Home</a> | 
@@ -61,6 +70,12 @@ jQuery(function(){
 	<tr>
 		<td colspan="3" id='siscontent'>
 			<?php
+			
+			/*
+				echo "<pre>";
+				print_r($fb_user_profile);
+				echo "</pre>";
+			*/
 			echo $content;
 			?>
 		</td>
